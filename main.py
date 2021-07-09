@@ -18,4 +18,3 @@ async def on_message(message):
         print("Command given")
 
 bot.run(os.environ['TOKEN'])
-
