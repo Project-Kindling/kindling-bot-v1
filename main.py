@@ -1,9 +1,8 @@
+import os
 from dotenv import load_dotenv
 import discord
-import os
 
-
-load_dotenv() 
+load_dotenv()
 
 bot = discord.Client()
 
@@ -19,7 +18,3 @@ async def on_message(message):
         print("Command given")
 
 bot.run(os.environ['TOKEN'])
-
-
-
-
