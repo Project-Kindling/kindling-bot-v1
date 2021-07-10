@@ -16,5 +16,10 @@ async def on_message(message):
         return
     if message.content.startswith('%'):
         print("Command given")
+    if message.content.startswith('%hi'):
+       await message.channel.send('hi <@' + str(message.author.id) + '>!')
+    if message.content.startswith('%announce'):
+        announcement = message.content[9:].strip()
+        await channel.send(announcement)
 
 bot.run(os.environ['TOKEN'])
