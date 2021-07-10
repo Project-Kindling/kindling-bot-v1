@@ -19,6 +19,7 @@ async def on_message(message):
     if message.content.startswith('%hi'):
        await message.channel.send('hi <@' + str(message.author.id) + '>!')
     if message.content.startswith('%announce'):
+        channel = bot.get_channel(863182926283014154)
         announcement = message.content[9:].strip()
         await channel.send(announcement)
 
