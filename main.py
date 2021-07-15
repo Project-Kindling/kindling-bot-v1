@@ -23,7 +23,7 @@ async def on_message(message):
         announcement = message.content[9:].strip()
         await channel.send(announcement)
     if message.content.startswith('%feedback'):
-        channel=bot.get_channel(865314356798291969)
+        channel = bot.get_channel(865314356798291969)
         feedback = message.content[9:].strip()
         anon_embed = discord.Embed(title="Anonymous Feedback", description=feedback, color=0xff3232)
         await channel.send(embed=anon_embed)
