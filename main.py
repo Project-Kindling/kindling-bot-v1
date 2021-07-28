@@ -26,11 +26,13 @@ async def helpcmd(ctx):
 async def feedback(ctx, *, message):
   channel = bot.get_channel(865314356798291969)
   embedvar = discord.Embed(title="Anonymous Feedback", description=message, color=0xfe745a)
-  await channel.send(embed=embedvar)
+  await ctx.channel.send(embed=embedvar)
 
 @feedback.error
-async def feedback_error(ctx, error):
-  await ctx.send('This command can only be used in private messages.')
+async def on_feedback_error(ctx, error):
+  if isinstance(error, commands.PrivateMessageOnly):
+    await ctx.send('This command can only be sent through private messages.')
+    await ctx.message.delete()
 
 @bot.command(name='announce')
 @commands.has_permissions(administrator=True)
@@ -39,8 +41,10 @@ async def announce(ctx, *, message):
   await channel.send(message)
 
 @announce.error
-async def announce_error(ctx, error):
-  await ctx.send('Only admins can run this command!')
+async def on_announce_error(ctx,error):
+  if isinstance(error, commands.MissingPermissions):
+    await ctx.send('Only admins can run this command!')
+    await ctx.message.delete()
 
 @bot.event
 async def on_message(message):
