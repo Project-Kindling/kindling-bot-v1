@@ -25,9 +25,9 @@ async def helpcmd(ctx):
 @commands.dm_only()
 async def feedback(ctx):
   channel = bot.get_channel(865314356798291969)
-  feedback = ctx.message.content[9:].strip()
-  embedVar = discord.Embed(title="Anonymous Feedback", description=feedback, color=0xee6611)
-  await channel.send(embed=embedVar)
+  feedback_msg = ctx.message.content[9:].strip()
+  embedvar = discord.Embed(title="Anonymous Feedback", description=feedback_msg, color=0xee6611)
+  await channel.send(embed=embedvar)
 
 @feedback.error
 async def on_feedback_error(ctx, error):
@@ -37,7 +37,7 @@ async def on_feedback_error(ctx, error):
 
 @bot.command(name='announce')
 @commands.has_permissions(administrator=True)
-async def announce(ctx, *, message):
+async def announce(ctx):
   channel = bot.get_channel(863182926283014154) #channel id of receiving channel
   announcement = ctx.message.content[9:].strip()
   await channel.send(announcement)
