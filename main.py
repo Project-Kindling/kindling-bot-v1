@@ -13,15 +13,15 @@ async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
 @bot.command(name='help')
-async def help(ctx):
+async def helpcmd(ctx):
   embed = discord.Embed(title="Kindling Bot Commands", description="", colour=0x00ff00)
-  embed.add_field(name="%feedback", value="Direct message Kindling Bot with this command to anonymously\
-       send feedback to the Project Kindling moderators", inline=True)
-  embed.add_field(name="%announce", value="Admin command that sends announcement content to a designated\
-       announcement channel", inline=True)
+  embed.add_field(name="%feedback", value="Direct message Kindling Bot with this command to \
+      anonymously send feedback to the Project Kindling moderators", inline=True)
+  embed.add_field(name="%announce", value="Admin command that sends announcement content\
+       to a designated announcement channel", inline=True)
   await ctx.send(embed=embed)
 
-@bot.command(name='feedback')#works
+@bot.command(name='feedback')
 @commands.dm_only()
 async def feedback(ctx, *, message):
   channel = bot.get_channel(865314356798291969)
@@ -32,7 +32,7 @@ async def feedback(ctx, *, message):
 async def feedback_error(ctx, error):
   await ctx.send('This command can only be used in private messages.')
 
-@bot.command(name='announce')#works
+@bot.command(name='announce')
 @commands.has_permissions(administrator=True)
 async def announce(ctx, *, message):
   channel = bot.get_channel(863182926283014154) #channel id of receiving channel
