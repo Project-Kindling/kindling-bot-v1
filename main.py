@@ -2,11 +2,29 @@ import os
 from dotenv import load_dotenv
 import discord
 from discord.ext import commands
+from discord.utils import get
+import datetime
+from dataclasses import *
 
 load_dotenv()
 
 bot = commands.Bot(command_prefix='%')
 bot.remove_command('help')
+
+emotes = (
+    "\U0001f1E6",
+    "\U0001f1E7",
+    "\U0001f1E8",
+    "\U0001f1E9",
+    "\U0001f1EA",
+    "\U0001f1EB",
+    "\U0001f1EC",
+    "\U0001f1ED",
+    "\U0001f1EE",
+    "\U0001f1EF",
+    "\U0001f1F0",
+    "\U0001f1F1"
+)
 
 @bot.event
 async def on_ready():
@@ -48,6 +66,43 @@ async def on_announce_error(ctx, error):
     await ctx.send('Only admins can run this command!')
     await ctx.message.delete()
 
+@bot.command(name="newpoll")
+async def new_poll(ctx, question, *options):
+    if len(options) > 12:
+        await ctx.send("You can have a maximum of 12 choices in your poll")
+
+    else:
+        embed = discord.Embed(title = "Poll",
+                              description = question,
+                              colour = discord.Colour.red())
+
+        fields = [("Options", "\n".join([f"{emotes[idx]} {option}" for idx, option in enumerate(options)]), False),
+                  ("Instructions", "Please react in order to vote!", False)]
+
+        for name, value, inline in fields:
+            embed.add_field(name = name, value = value, inline = inline)
+
+        embed = embed.add_field(name = "Total votes", value = 0, inline = False)
+        message = await ctx.send(embed = embed)
+
+        for emoji in emotes[:len(options)]:
+            await message.add_reaction(emoji)
+
+        message_win = await bot.get_channel(message.channel.id).fetch_message(message.id)
+        # poll_winner = max(message_win.reactions, key = lambda r: r.count)
+        total_votes = sum(reaction.count for reaction in message_win.reactions) - len(options)
+        # print(total_votes)
+        # await ctx.send(total_votes)
+
+        # tv_embed = embed.add_field(name = "Total votes", value = total_votes, inline = False)
+        tv_embed = embed.set_field_at(2, name = "Total votes", value = total_votes, inline = False)
+        # await ctx.send(embed = tv_embed)
+        await message.edit(embed = tv_embed)
+
+# @bot.event
+# async def on_reaction_add(reaction, user):
+#     print("planning to ember.set_field_at(...) here")
+
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -55,7 +110,7 @@ async def on_message(message):
     if message.content.startswith('%'):
         print("Command given")
     if message.content.startswith('%hi'):
-       await message.channel.send('hi <@' + str(message.author.id) + '>!')
+        await message.channel.send('hi <@' + str(message.author.id) + '>!')
     await bot.process_commands(message)
 
 bot.run(os.environ['TOKEN'])
