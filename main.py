@@ -97,8 +97,8 @@ async def new_poll(ctx, question, *options):
         for emoji in emotes[:len(options)]:
             await message.add_reaction(emoji)
 
-        message_win = await bot.get_channel(message.channel.id).fetch_message(message.id)
-        total_votes = sum(reaction.count for reaction in message_win.reactions) - len_of_options
+        # message_win = await bot.get_channel(message.channel.id).fetch_message(message.id)
+        # total_votes = sum(reaction.count for reaction in message_win.reactions) - len_of_options
 
         await message.edit(embed = embed)
 
