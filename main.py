@@ -26,6 +26,11 @@ emotes = (
     "\U0001f1F1"
 )
 
+global len_of_options
+len_of_options = 0
+global auto_react
+auto_react = 0
+
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
@@ -37,6 +42,8 @@ async def helpcmd(ctx):
       anonymously send feedback to the Project Kindling moderators", inline=True)
   embed.add_field(name="%announce", value="Admin command that sends announcement content\
        to a designated announcement channel", inline=True)
+  embed.add_field(name="%newpoll", value="Any user can create a poll with upto 12 options.\
+  ```%newpoll \"The Poll\" a b c```", inline=True)
   await ctx.send(embed=embed)
 
 @bot.command(name='feedback')
@@ -68,6 +75,8 @@ async def on_announce_error(ctx, error):
 
 @bot.command(name="newpoll")
 async def new_poll(ctx, question, *options):
+    global len_of_options
+    len_of_options = len(options)
     if len(options) > 12:
         await ctx.send("You can have a maximum of 12 choices in your poll")
 
@@ -89,19 +98,25 @@ async def new_poll(ctx, question, *options):
             await message.add_reaction(emoji)
 
         message_win = await bot.get_channel(message.channel.id).fetch_message(message.id)
-        # poll_winner = max(message_win.reactions, key = lambda r: r.count)
-        total_votes = sum(reaction.count for reaction in message_win.reactions) - len(options)
-        # print(total_votes)
-        # await ctx.send(total_votes)
+        total_votes = sum(reaction.count for reaction in message_win.reactions) - len_of_options
 
-        # tv_embed = embed.add_field(name = "Total votes", value = total_votes, inline = False)
-        tv_embed = embed.set_field_at(2, name = "Total votes", value = total_votes, inline = False)
-        # await ctx.send(embed = tv_embed)
+        await message.edit(embed = embed)
+
+@bot.event
+async def on_reaction_add(reaction, user):
+    message = reaction.message
+    global auto_react
+    if auto_react < len_of_options:
+        auto_react = auto_react + 1
+        print(f"auto_react count is: {auto_react}")
+    else:
+        message = reaction.message
+        # tv_embed = message.embeds[0]
+        total_votes = sum(reaction.count for reaction in message.reactions) - len_of_options
+        print(f"Total votes: {total_votes}")
+        print(f"Length of options: {len_of_options}")
+        tv_embed = message.embeds[0].set_field_at(2, name = "Total votes", value = total_votes, inline = False)
         await message.edit(embed = tv_embed)
-
-# @bot.event
-# async def on_reaction_add(reaction, user):
-#     print("planning to ember.set_field_at(...) here")
 
 @bot.event
 async def on_message(message):
