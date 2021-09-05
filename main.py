@@ -110,13 +110,24 @@ async def on_reaction_add(reaction, user):
         auto_react = auto_react + 1
         print(f"auto_react count is: {auto_react}")
     else:
-        message = reaction.message
         # tv_embed = message.embeds[0]
         total_votes = sum(reaction.count for reaction in message.reactions) - len_of_options
         print(f"Total votes: {total_votes}")
         print(f"Length of options: {len_of_options}")
         tv_embed = message.embeds[0].set_field_at(2, name = "Total votes", value = total_votes, inline = False)
         await message.edit(embed = tv_embed)
+
+@bot.event
+async def on_raw_reaction_remove(payload):
+    print("Message removed")
+    channel = bot.get_channel(payload.channel_id)
+    message = await channel.fetch_message(payload.message_id)
+
+    total_votes = sum(reaction.count for reaction in message.reactions) - len_of_options
+    print(f"Total votes: {total_votes}")
+    print(f"Length of options: {len_of_options}")
+    tv_embed = message.embeds[0].set_field_at(2, name = "Total votes", value = total_votes, inline = False)
+    await message.edit(embed = tv_embed)
 
 @bot.event
 async def on_message(message):
