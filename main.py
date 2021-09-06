@@ -2,9 +2,6 @@ import os
 from dotenv import load_dotenv
 import discord
 from discord.ext import commands
-from discord.utils import get
-import datetime
-from dataclasses import *
 
 load_dotenv()
 
