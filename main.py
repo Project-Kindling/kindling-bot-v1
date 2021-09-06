@@ -99,9 +99,27 @@ async def new_poll(ctx, question, *options):
 
         await message.edit(embed = embed)
 
+# @bot.event
+# async def on_reaction_add(reaction, user):
+#     message = reaction.message
+#     global auto_react
+#     if auto_react < len_of_options:
+#         auto_react = auto_react + 1
+#         print(f"auto_react count is: {auto_react}")
+#     else:
+#         # tv_embed = message.embeds[0]
+#         total_votes = sum(reaction.count for reaction in message.reactions) - len_of_options
+#         print(f"Total votes: {total_votes}")
+#         print(f"Length of options: {len_of_options}")
+#         tv_embed = message.embeds[0].set_field_at(2, name = "Total votes", value = total_votes, inline = False)
+#         await message.edit(embed = tv_embed)
+
 @bot.event
-async def on_reaction_add(reaction, user):
-    message = reaction.message
+async def on_raw_reaction_add(payload):
+    print("Message removed")
+    channel = bot.get_channel(payload.channel_id)
+    message = await channel.fetch_message(payload.message_id)
+
     global auto_react
     if auto_react < len_of_options:
         auto_react = auto_react + 1
