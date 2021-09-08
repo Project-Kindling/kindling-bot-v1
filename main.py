@@ -5,6 +5,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
 import discord
 from discord.ext import commands
+import asyncio
 
 load_dotenv()
 
@@ -16,6 +17,26 @@ bot.remove_command('help')
 sched = AsyncIOScheduler(timezone='America/Toronto')
 #starting the scheduler
 sched.start()
+
+emotes = (
+    "\U0001f1E6",
+    "\U0001f1E7",
+    "\U0001f1E8",
+    "\U0001f1E9",
+    "\U0001f1EA",
+    "\U0001f1EB",
+    "\U0001f1EC",
+    "\U0001f1ED",
+    "\U0001f1EE",
+    "\U0001f1EF",
+    "\U0001f1F0",
+    "\U0001f1F1"
+)
+
+global len_of_options
+len_of_options = 0
+global auto_react
+auto_react = 0
 
 @bot.event
 async def on_ready():
@@ -118,7 +139,7 @@ async def announce(ctx):
                           elif ans.content.lower() == "yes":
                             await ctx.send("Great!")
                             sched.add_job(anembed, 'date', run_date=timeof.content, args=[embed])
-                  elif sendimg.content.lower() == "no": 
+                  elif sendimg.content.lower() == "no":
                       await ctx.send("Your announcement will be sent on {}.\nHere is a preview".\
                       format(timeof.content))
                       embed = discord.Embed(title= tit.content,\
@@ -152,6 +173,88 @@ async def anembed(embed):
  # allowed_mentions = discord.AllowedMentions(everyone = True, roles=True, users=True)
  # await channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
   await channel.send(embed=embed)
+
+@bot.command(name="newpoll")
+@commands.has_permissions(administrator=True)
+async def new_poll(ctx, question, *space_sep_arg):
+    joined_arg = ' '.join(space_sep_arg)
+    split_arg = joined_arg.split(',')
+    print(f"Printing space_sep_arg --- {space_sep_arg}")
+    print(f"Printing joined_arg --- {joined_arg}")
+    print(f"Printing split_arg --- {split_arg}")
+    options = split_arg
+
+    global len_of_options
+    len_of_options = len(options)
+
+    if len(options) > 12:
+        await ctx.send("You can have a maximum of 12 choices in your poll")
+    else:
+        embed = discord.Embed(title="Poll",
+                              description=question,
+                              colour=discord.Colour.red())
+
+        fields = [("Options", "\n".join([f"{emotes[idx]} {option}" for idx, option in enumerate(options)]), False),
+                  ("Instructions", "Please react in order to vote!", False)]
+
+        for name, value, inline in fields:
+            embed.add_field(name=name, value=value, inline=inline)
+
+        embed = embed.add_field(name="Total votes", value=0, inline=False)
+        message = await ctx.send(embed=embed)
+
+        for emoji in emotes[:len(options)]:
+            await message.add_reaction(emoji)
+
+        # message_win = await bot.get_channel(message.channel.id).fetch_message(message.id)
+        # total_votes = sum(reaction.count for reaction in message_win.reactions) - len_of_options
+
+        await message.edit(embed=embed)
+
+# @bot.event
+# async def on_reaction_add(reaction, user):
+#     message = reaction.message
+#     global auto_react
+#     if auto_react < len_of_options:
+#         auto_react = auto_react + 1
+#         print(f"auto_react count is: {auto_react}")
+#     else:
+#         # tv_embed = message.embeds[0]
+#         total_votes = sum(reaction.count for reaction in message.reactions) - len_of_options
+#         print(f"Total votes: {total_votes}")
+#         print(f"Length of options: {len_of_options}")
+#         tv_embed = message.embeds[0].set_field_at(2, name = "Total votes", value = total_votes, inline = False)
+#         await message.edit(embed = tv_embed)
+
+@bot.event
+async def on_raw_reaction_add(payload):
+    print("Message removed")
+    channel = bot.get_channel(payload.channel_id)
+    message = await channel.fetch_message(payload.message_id)
+
+    global auto_react
+    if auto_react < len_of_options:
+        auto_react = auto_react + 1
+        print(f"auto_react count is: {auto_react}")
+    else:
+        # tv_embed = message.embeds[0]
+        total_votes = sum(reaction.count for reaction in message.reactions) - len_of_options
+        print(f"Total votes: {total_votes}")
+        print(f"Length of options: {len_of_options}")
+        tv_embed = message.embeds[0].set_field_at(2, name="Total votes", value=total_votes, inline=False)
+        await message.edit(embed=tv_embed)
+
+@bot.event
+async def on_raw_reaction_remove(payload):
+    print("Message removed")
+    channel = bot.get_channel(payload.channel_id)
+    message = await channel.fetch_message(payload.message_id)
+
+    total_votes = sum(reaction.count for reaction in message.reactions) - len_of_options
+    print(f"Total votes: {total_votes}")
+    print(f"Length of options: {len_of_options}")
+    tv_embed = message.embeds[0].set_field_at(2, name="Total votes", value=total_votes, inline=False)
+    await message.edit(embed=tv_embed)
 
 @bot.event
 async def on_message(message):
