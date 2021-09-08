@@ -71,6 +71,7 @@ async def on_announce_error(ctx, error):
     await ctx.message.delete()
 
 @bot.command(name="newpoll")
+@commands.has_permissions(administrator=True)
 async def new_poll(ctx, question, *space_sep_arg):
     joined_arg = ' '.join(space_sep_arg)
     split_arg = joined_arg.split(',')
