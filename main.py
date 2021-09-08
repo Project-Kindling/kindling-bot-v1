@@ -40,7 +40,7 @@ async def helpcmd(ctx):
   embed.add_field(name="%announce", value="Admin command that sends announcement content\
        to a designated announcement channel", inline=True)
   embed.add_field(name="%newpoll", value="Any user can create a poll with upto 12 options.\
-  ```%newpoll \"The Poll\" a b c```", inline=True)
+  ```%newpoll \"The Poll\" Option 1, Option 2, Option 3```", inline=True)
   await ctx.send(embed=embed)
 
 @bot.command(name='feedback')
@@ -71,12 +71,19 @@ async def on_announce_error(ctx, error):
     await ctx.message.delete()
 
 @bot.command(name="newpoll")
-async def new_poll(ctx, question, *options):
+async def new_poll(ctx, question, *space_sep_arg):
+    joined_arg = ' '.join(space_sep_arg)
+    split_arg = joined_arg.split(',')
+    print(f"Printing space_sep_arg --- {space_sep_arg}")
+    print(f"Printing joined_arg --- {joined_arg}")
+    print(f"Printing split_arg --- {split_arg}")
+    options = split_arg
+
     global len_of_options
     len_of_options = len(options)
+
     if len(options) > 12:
         await ctx.send("You can have a maximum of 12 choices in your poll")
-
     else:
         embed = discord.Embed(title = "Poll",
                               description = question,
