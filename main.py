@@ -49,6 +49,8 @@ async def helpcmd(ctx):
       anonymously send feedback to the Project Kindling moderators", inline=True)
   embed.add_field(name="%announce", value="Admin command that sends announcement content\
        to a designated announcement channel", inline=True)
+  embed.add_field(name="%newpoll", value="Any user can create a poll with upto 12 options.\
+       ```%newpoll \"Question\" Opt 1, Opt 2, Opt 3```", inline=True)
   await ctx.send(embed=embed)
 
 @bot.command(name='feedback')
@@ -70,11 +72,13 @@ async def on_feedback_error(ctx, error):
 async def announce(ctx):
   if ctx.channel.id == 857375433812475922:
 
-    await ctx.send("What would you like the title of your announcement to be? (type cancel anytime to end this process)")
+    await ctx.send("What would you like the title of your announcement to be? (type `cancel` anytime to end this process)")
     try:
       tit = await bot.wait_for("message", check=lambda m: m.author == ctx.author\
-         and m.channel == ctx.channel, timeout=30.0)
-    except: asyncio.TimeoutError
+         and m.channel == ctx.channel, timeout=300.0)
+    except:
+        asyncio.TimeoutError
+        await ctx.send("Request timed out, type `%announce` to start again")
     else:
       if tit.content.lower() == "cancel":
         await ctx.send("Okay, cancelling")
@@ -83,8 +87,10 @@ async def announce(ctx):
         await ctx.send("What would you like the content of your announcement to be?")
         try:
           con = await bot.wait_for("message", check=lambda m: m.author == ctx.author\
-             and m.channel == ctx.channel, timeout=30.0)
-        except: asyncio.TimeoutError
+             and m.channel == ctx.channel, timeout=300.0)
+        except:
+            asyncio.TimeoutError
+            await ctx.send("Request timed out, type `%announce` to start again")
         else:
           if con.content.lower() == "cancel":
             await ctx.send("Okay, cancelling")
@@ -93,17 +99,21 @@ async def announce(ctx):
             await ctx.send("What day and time would you like the announcement posted?\nUse this format: yyyy-mm-dd hh:mm:ss\nUse the 24hr clock format")
             try:
               timeof = await bot.wait_for("message", check=lambda m: m.author == ctx.author\
-                 and m.channel == ctx.channel, timeout=30.0)
-            except: asyncio.TimeoutError
+                 and m.channel == ctx.channel, timeout=300.0)
+            except:
+                asyncio.TimeoutError
+                await ctx.send("Request timed out, type `%announce` to start again")
             else:
               if timeof.content.lower() == "cancel":
                 await ctx.send("Okay, cancelling")
                 return
               else:
-                await ctx.send("Would you like to add an image to the announcement? (type yes/no)")
+                await ctx.send("Would you like to add an image to the announcement? (type `yes`/`no`)")
                 try:
-                  sendimg = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=30.0)
-                except: asyncio.TimeoutError
+                  sendimg = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=300.0)
+                except:
+                    asyncio.TimeoutError
+                    await ctx.send("Request timed out, type `%announce` to start again")
                 else:
                   if sendimg.content.lower() == "cancel":
                     await ctx.send("Okay, cancelling")
@@ -112,8 +122,10 @@ async def announce(ctx):
                     await ctx.send("Send your image")
                     try:
                       img = await bot.wait_for("message", check=lambda m: m.author == ctx.author and\
-                         m.channel == ctx.channel, timeout=30.0)
-                    except: asyncio.TimeoutError
+                         m.channel == ctx.channel, timeout=300.0)
+                    except:
+                        asyncio.TimeoutError
+                        await ctx.send("Request timed out, type `%announce` to start again")
                     else:
                       if img.content.lower() == "cancel":
                         await ctx.send("Okay, cancelling")
@@ -127,11 +139,13 @@ async def announce(ctx):
                         embed.set_image(url=img.attachments[0].url)
 
                         await ctx.send(embed=embed)
-                        await ctx.send("Type yes to confirm that you would like to send this announcement,\
-                           type cancel and enter announce command again to restart the process")
+                        await ctx.send("Type `yes` to confirm that you would like to send this announcement,\
+                        type `cancel` and enter `%announce` again to restart the process")
                         try:
-                          ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=30.0)
-                        except: asyncio.TimeoutError
+                          ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=300.0)
+                        except:
+                            asyncio.TimeoutError
+                            await ctx.send("Request timed out, type `%announce` to start again")
                         else:
                           if ans.content.lower() == "cancel":
                             await ctx.send("Okay, cancelling")
@@ -145,12 +159,14 @@ async def announce(ctx):
                       embed = discord.Embed(title= tit.content,\
                         description=con.content, color=0xffe4e1)
                       await ctx.send(embed=embed)
-                      await ctx.send("Type yes to confirm that you would like to send this announcement,\
-                       type cancel and enter announce command again to restart the process")
+                      await ctx.send("Type `yes` to confirm that you would like to send this announcement,\
+                      type `cancel` and enter `%announce` again to restart the process")
                       try:
                         ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author \
-                        and m.channel == ctx.channel, timeout=30.0)
-                      except: asyncio.TimeoutError
+                        and m.channel == ctx.channel, timeout=300.0)
+                      except:
+                          asyncio.TimeoutError
+                          await ctx.send("Request timed out, type `%announce` to start again")
                       else:
                         if ans.content.lower() == "cancel":
                           await ctx.send("Okay, cancelling")
@@ -266,4 +282,5 @@ async def on_message(message):
        await message.channel.send('hi <@' + str(message.author.id) + '>!')
     await bot.process_commands(message)
 
-bot.run(os.environ['TOKEN'])
+# bot.run(os.environ['TOKEN'])
+bot.run('ODgzNTk1Njg1NjMzNjA5NzY4.YTMOmw.ctqqPKy5jyATjIcjpB9SmMW9uII')
