@@ -50,7 +50,7 @@ async def helpcmd(ctx):
   embed.add_field(name="%announce", value="Admin command that sends announcement content\
        to a designated announcement channel", inline=True)
   embed.add_field(name="%newpoll", value="Any user can create a poll with upto 12 options.\
-       ```%newpoll \"Question\" Opt 1, Opt 2, Opt 3```", inline=True)
+       ```%newpoll \"Quiz\" 1, 2, 3```\n NOTE: If on phone do not use `’`", inline=True)
   await ctx.send(embed=embed)
 
 @bot.command(name='feedback')
@@ -282,4 +282,5 @@ async def on_message(message):
        await message.channel.send('hi <@' + str(message.author.id) + '>!')
     await bot.process_commands(message)
 
-bot.run(os.environ['TOKEN'])
+# bot.run(os.environ['TOKEN'])
+bot.run('ODgzNTk1Njg1NjMzNjA5NzY4.YTMOmw.InY9kbBFc0T_AXx88E2cgi7mfR0')
