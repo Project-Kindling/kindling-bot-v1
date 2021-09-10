@@ -50,7 +50,7 @@ async def helpcmd(ctx):
   embed.add_field(name="%announce", value="Admin command that sends announcement content\
        to a designated announcement channel", inline=True)
   embed.add_field(name="%newpoll", value="Any user can create a poll with upto 12 options.\
-       ```%newpoll \"Question\" Opt 1, Opt 2, Opt 3```", inline=True)
+       ```%newpoll \"Quiz\" 1, 2, 3```", inline=True)
   await ctx.send(embed=embed)
 
 @bot.command(name='feedback')
