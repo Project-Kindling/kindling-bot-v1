@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+import re
 import pytz
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
@@ -178,13 +179,21 @@ async def anembed(embed):
 
 @bot.command(name="newpoll")
 @commands.has_permissions(administrator=True)
-async def new_poll(ctx, question, *space_sep_arg):
-    joined_arg = ' '.join(space_sep_arg)
-    split_arg = joined_arg.split(',')
-    print(f"Printing space_sep_arg --- {space_sep_arg}")
-    print(f"Printing joined_arg --- {joined_arg}")
-    print(f"Printing split_arg --- {split_arg}")
-    options = split_arg
+async def new_poll(ctx):
+    msg_content = ctx.message.content[9:]
+    print(f"msg_content --- {msg_content}")
+    question = re.findall('"([^"]*)"', msg_content)
+    question = ''.join(question)
+    print(f"question type --- {type(question)}")
+    print(f"question -- {question}")
+    to_cut = len(question) + 2
+    msg_options = msg_content[to_cut:]
+    print(f"msg_options --- {msg_options}")
+    raw_options = msg_options.split(',')
+    raw_options = [r_op.strip() for r_op in msg_options.split(',')]
+    print(f"raw_options --- {raw_options}")
+
+    options = raw_options
 
     global len_of_options
     len_of_options = len(options)
@@ -208,25 +217,7 @@ async def new_poll(ctx, question, *space_sep_arg):
         for emoji in emotes[:len(options)]:
             await message.add_reaction(emoji)
 
-        # message_win = await bot.get_channel(message.channel.id).fetch_message(message.id)
-        # total_votes = sum(reaction.count for reaction in message_win.reactions) - len_of_options
-
         await message.edit(embed=embed)
-
-# @bot.event
-# async def on_reaction_add(reaction, user):
-#     message = reaction.message
-#     global auto_react
-#     if auto_react < len_of_options:
-#         auto_react = auto_react + 1
-#         print(f"auto_react count is: {auto_react}")
-#     else:
-#         # tv_embed = message.embeds[0]
-#         total_votes = sum(reaction.count for reaction in message.reactions) - len_of_options
-#         print(f"Total votes: {total_votes}")
-#         print(f"Length of options: {len_of_options}")
-#         tv_embed = message.embeds[0].set_field_at(2, name = "Total votes", value = total_votes, inline = False)
-#         await message.edit(embed = tv_embed)
 
 @bot.event
 async def on_raw_reaction_add(payload):
