@@ -44,6 +44,7 @@ channel.
 5. Mention if you want to add an image to your announcement
 
    + If you want to add an image to your announcement
+
      [[./img_docs/announce-command-8.png]]
 
    + If you don't want to add an image to tour announcement
