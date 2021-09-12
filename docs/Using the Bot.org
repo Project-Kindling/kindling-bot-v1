@@ -1,10 +1,10 @@
 #+TITLE: Using the Kingling Bot
 
-* Command Prefix
+** Command Prefix
 
 The prefix for running commands for the Kindling Bot is ~%~.
 
-* Help Command
+** Help Command
 
 Using the ~%help~ command will output the list of available commands and how to
 use them.
@@ -15,7 +15,7 @@ use them.
 
 [[./img_docs/help-command.png]]
 
-* Announce Command
+** Announce Command
 
 Using the ~%announce~ command, administrators can schedule announcement ahead of
 time. The scheduled announcements are made in our server's ~# announcements~
