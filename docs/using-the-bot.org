@@ -18,8 +18,7 @@ use them.
 ** Announce Command
 
 Using the ~%announce~ command, administrators can schedule announcement ahead
-of time. The scheduled announcements are made in our server's
-~# announcements~ channel. To stop the announcement process at any time,
+of time. The scheduled announcements are made in tge ~# announcements~ channel of our server. To stop the announcement process at any time,
 type ~cancel~.
 
 #+begin_src text
