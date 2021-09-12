@@ -43,12 +43,28 @@ channel.
 
 5. Mention if you want to add an image to your announcement
 
-   [[./img_docs/announce-command-5.png]]
+   + If you want to add an image to your announcement
+     [[./img_docs/announce-command-8.png]]
+
+   + If you don't want to add an image to tour announcement
+     [[./img_docs/announce-command-5.png]]
 
 6. Confirm your announcement's title, contents, and schedule
 
-   [[./img_docs/announce-command-6.png]]
+   + If no picture was added
+
+    [[./img_docs/announce-command-6.png]]
+
+   + If picture was added
+
+    [[./img_docs/announce-command-9.png]]
 
 7. The announcement will be made in its designated channel in due time.
 
-   [[./img_docs/announce-command-7.png]]
+   + If no picture was added
+
+    [[./img_docs/announce-command-7.png]]
+
+   + If picture was added
+
+    [[./img_docs/announce-command-10.png]]
