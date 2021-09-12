@@ -48,6 +48,7 @@ channel.
      [[./img_docs/announce-command-8.png]]
 
    + If you don't want to add an image to tour announcement
+
      [[./img_docs/announce-command-5.png]]
 
 6. Confirm your announcement's title, contents, and schedule
