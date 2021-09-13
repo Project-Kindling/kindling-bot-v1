@@ -1,9 +1,12 @@
 #+TITLE: Using the Kindling Bot
 
+** Table of Contents :TOC_2:noexport:
+  - [[#command-prefix][Command Prefix]]
+  - [[#help-command][Help Command]]
+  - [[#announce-command][Announce Command]]
+  - [[#poll-command][Poll Command]]
+
 ** Command Prefix
-:PROPERTIES:
-:TOC:      :include all :depth 2
-:END:
 
 The prefix for running commands for the Kindling Bot is ~%~.
 
