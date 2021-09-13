@@ -1,7 +1,9 @@
 #+TITLE: Using the Kindling Bot
-#+OPTIONS: toc:2
 
 ** Command Prefix
+:PROPERTIES:
+:TOC:      :include all :depth 2
+:END:
 
 The prefix for running commands for the Kindling Bot is ~%~.
 
