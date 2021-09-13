@@ -179,7 +179,7 @@ async def anembed(embed):
 
 @bot.command(name="newpoll")
 @commands.has_permissions(administrator=True)
-async def new_poll(ctx):
+async def newpoll(ctx):
     msg_content = ctx.message.content[9:]
     print(f"msg_content --- {msg_content}")
     question = re.findall('"([^"]*)"', msg_content)
@@ -248,6 +248,12 @@ async def on_raw_reaction_remove(payload):
     print(f"Length of options: {len_of_options}")
     tv_embed = message.embeds[0].set_field_at(2, name="Total votes", value=total_votes, inline=False)
     await message.edit(embed=tv_embed)
+
+@newpoll.error
+async def on_newpoll_error(ctx, error):
+  if isinstance(error, commands.MissingPermissions):
+    await ctx.send('Only admins can run this command!')
+    await ctx.message.delete()
 
 @bot.event
 async def on_message(message):
