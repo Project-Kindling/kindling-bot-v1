@@ -179,45 +179,92 @@ async def anembed(embed):
 
 @bot.command(name="newpoll")
 @commands.has_permissions(administrator=True)
+# @commands.has_role("Project Kindling Team")
 async def newpoll(ctx):
-    msg_content = ctx.message.content[9:]
-    print(f"msg_content --- {msg_content}")
-    question = re.findall('"([^"]*)"', msg_content)
-    question = ''.join(question)
-    print(f"question type --- {type(question)}")
-    print(f"question -- {question}")
-    to_cut = len(question) + 2
-    msg_options = msg_content[to_cut:]
-    print(f"msg_options --- {msg_options}")
-    raw_options = msg_options.split(',')
-    raw_options = [r_op.strip() for r_op in msg_options.split(',')]
-    print(f"raw_options --- {raw_options}")
+    # role_check = ctx.message.guild.roles
+    msg_author = ctx.message.author
+    role_id = discord.utils.get(ctx.guild.roles, name="Project Kindling Team")
+    if role_id in msg_author.roles:
+     msg_content = ctx.message.content[9:]
+     print(f"msg_content --- {msg_content}")
+     question = re.findall('"([^"]*)"', msg_content)
+     question = ''.join(question)
+     print(f"question type --- {type(question)}")
+     print(f"question -- {question}")
+     to_cut = len(question) + 2
+     msg_options = msg_content[to_cut:]
+     print(f"msg_options --- {msg_options}")
+     raw_options = msg_options.split(',')
+     raw_options = [r_op.strip() for r_op in msg_options.split(',')]
+     print(f"raw_options --- {raw_options}")
 
-    options = raw_options
+     options = raw_options
 
-    global len_of_options
-    len_of_options = len(options)
+     global len_of_options
+     len_of_options = len(options)
 
-    if len(options) > 12:
-        await ctx.send("You can have a maximum of 12 choices in your poll")
+     if len(options) > 12:
+         await ctx.send("You can have a maximum of 12 choices in your poll")
+     else:
+         embed = discord.Embed(title="Poll",
+                               description=question,
+                               colour=discord.Colour.red())
+
+         fields = [("Options", "\n".join([f"{emotes[idx]} {option}" for idx, option in enumerate(options)]), False),
+                   ("Instructions", "Please react in order to vote!", False)]
+
+         for name, value, inline in fields:
+             embed.add_field(name=name, value=value, inline=inline)
+
+         embed = embed.add_field(name="Total votes", value=0, inline=False)
+         message = await ctx.send(embed=embed)
+
+         for emoji in emotes[:len(options)]:
+             await message.add_reaction(emoji)
+
+         await message.edit(embed=embed)
     else:
-        embed = discord.Embed(title="Poll",
-                              description=question,
-                              colour=discord.Colour.red())
+        # await ctx.send("Shoo! @Abrar, Shoo!")
+        # print("Not correct role")
 
-        fields = [("Options", "\n".join([f"{emotes[idx]} {option}" for idx, option in enumerate(options)]), False),
-                  ("Instructions", "Please react in order to vote!", False)]
+    # msg_content = ctx.message.content[9:]
+    # print(f"msg_content --- {msg_content}")
+    # question = re.findall('"([^"]*)"', msg_content)
+    # question = ''.join(question)
+    # print(f"question type --- {type(question)}")
+    # print(f"question -- {question}")
+    # to_cut = len(question) + 2
+    # msg_options = msg_content[to_cut:]
+    # print(f"msg_options --- {msg_options}")
+    # raw_options = msg_options.split(',')
+    # raw_options = [r_op.strip() for r_op in msg_options.split(',')]
+    # print(f"raw_options --- {raw_options}")
 
-        for name, value, inline in fields:
-            embed.add_field(name=name, value=value, inline=inline)
+    # options = raw_options
 
-        embed = embed.add_field(name="Total votes", value=0, inline=False)
-        message = await ctx.send(embed=embed)
+    # global len_of_options
+    # len_of_options = len(options)
 
-        for emoji in emotes[:len(options)]:
-            await message.add_reaction(emoji)
+    # if len(options) > 12:
+    #     await ctx.send("You can have a maximum of 12 choices in your poll")
+    # else:
+    #     embed = discord.Embed(title="Poll",
+    #                           description=question,
+    #                           colour=discord.Colour.red())
 
-        await message.edit(embed=embed)
+    #     fields = [("Options", "\n".join([f"{emotes[idx]} {option}" for idx, option in enumerate(options)]), False),
+    #               ("Instructions", "Please react in order to vote!", False)]
+
+    #     for name, value, inline in fields:
+    #         embed.add_field(name=name, value=value, inline=inline)
+
+    #     embed = embed.add_field(name="Total votes", value=0, inline=False)
+    #     message = await ctx.send(embed=embed)
+
+    #     for emoji in emotes[:len(options)]:
+    #         await message.add_reaction(emoji)
+
+    #     await message.edit(embed=embed)
 
 @bot.event
 async def on_raw_reaction_add(payload):
