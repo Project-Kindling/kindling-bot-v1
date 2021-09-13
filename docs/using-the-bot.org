@@ -1,7 +1,5 @@
 #+TITLE: Using the Kindling Bot
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 ** Command Prefix
 
 The prefix for running commands for the Kindling Bot is ~%~.
