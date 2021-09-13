@@ -1,4 +1,5 @@
 #+TITLE: Using the Kindling Bot
+#+OPTIONS: toc:2
 
 ** Command Prefix
 
