@@ -167,8 +167,8 @@ async def announce(ctx):
 @announce.error
 async def on_announce_error(ctx, error):
   if isinstance(error, commands.MissingPermissions):
-    await ctx.send('Only admins can run this command!')
-    await ctx.message.delete()
+      await ctx.send('You have have role ` Admin ` permissions for this command!')
+      await ctx.message.delete()
 
 
 async def anembed(embed):
@@ -224,47 +224,12 @@ async def newpoll(ctx):
 
          await message.edit(embed=embed)
     else:
-        # await ctx.send("Shoo! @Abrar, Shoo!")
-        # print("Not correct role")
+        # msg_author = ctx.message.author
+        msg_author_str = str(msg_author)
+        to_rem_hashtag = msg_author_str.find("#")
+        msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
-    # msg_content = ctx.message.content[9:]
-    # print(f"msg_content --- {msg_content}")
-    # question = re.findall('"([^"]*)"', msg_content)
-    # question = ''.join(question)
-    # print(f"question type --- {type(question)}")
-    # print(f"question -- {question}")
-    # to_cut = len(question) + 2
-    # msg_options = msg_content[to_cut:]
-    # print(f"msg_options --- {msg_options}")
-    # raw_options = msg_options.split(',')
-    # raw_options = [r_op.strip() for r_op in msg_options.split(',')]
-    # print(f"raw_options --- {raw_options}")
-
-    # options = raw_options
-
-    # global len_of_options
-    # len_of_options = len(options)
-
-    # if len(options) > 12:
-    #     await ctx.send("You can have a maximum of 12 choices in your poll")
-    # else:
-    #     embed = discord.Embed(title="Poll",
-    #                           description=question,
-    #                           colour=discord.Colour.red())
-
-    #     fields = [("Options", "\n".join([f"{emotes[idx]} {option}" for idx, option in enumerate(options)]), False),
-    #               ("Instructions", "Please react in order to vote!", False)]
-
-    #     for name, value, inline in fields:
-    #         embed.add_field(name=name, value=value, inline=inline)
-
-    #     embed = embed.add_field(name="Total votes", value=0, inline=False)
-    #     message = await ctx.send(embed=embed)
-
-    #     for emoji in emotes[:len(options)]:
-    #         await message.add_reaction(emoji)
-
-    #     await message.edit(embed=embed)
+        await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have the appropriate role!")
 
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -299,8 +264,13 @@ async def on_raw_reaction_remove(payload):
 @newpoll.error
 async def on_newpoll_error(ctx, error):
   if isinstance(error, commands.MissingPermissions):
-    await ctx.send('Only admins can run this command!')
-    await ctx.message.delete()
+      msg_author = ctx.message.author
+      msg_author_str = str(msg_author)
+      to_rem_hashtag = msg_author_str.find("#")
+      msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
+
+      await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have the appropriate role!")
+      await ctx.message.delete()
 
 @bot.event
 async def on_message(message):
@@ -312,4 +282,5 @@ async def on_message(message):
        await message.channel.send('hi <@' + str(message.author.id) + '>!')
     await bot.process_commands(message)
 
-bot.run(os.environ['TOKEN'])
+# bot.run(os.environ['TOKEN'])
+bot.run('ODgzNTk1Njg1NjMzNjA5NzY4.YTMOmw.XJdex3UOHhkWhlqxbzRkMiAUF14')
