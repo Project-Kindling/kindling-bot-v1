@@ -19,7 +19,7 @@ use them.
 %help
 #+end_src
 
-[[./img_docs/help-command.png]]
+[[./img/help-command.png]]
 
 ** Announce Command
 
@@ -33,49 +33,49 @@ type ~cancel~.
 
 1. Using the ~%announce~ command
 
-   [[./img_docs/announce-command-1.png]]
+   [[./img/announce-command-1.png]]
 
 2. Type in the title of your announcement
 
-   [[./img_docs/announce-command-2.png]]
+   [[./img/announce-command-2.png]]
 
 3. Type in the content of your announcement
 
-   [[./img_docs/announce-command-3.png]]
+   [[./img/announce-command-3.png]]
 
 4. Enter when the announcement will be posted
 
-   [[./img_docs/announce-command-4.png]]
+   [[./img/announce-command-4.png]]
 
 5. Mention if you want to add an image to your announcement
 
    + If you want to add an image to your announcement
 
-     [[./img_docs/announce-command-8.png]]
+     [[./img/announce-command-8.png]]
 
    + If you don't want to add an image to tour announcement
 
-     [[./img_docs/announce-command-5.png]]
+     [[./img/announce-command-5.png]]
 
 6. Confirm your announcement's title, contents, and schedule
 
    + If no picture was added
 
-    [[./img_docs/announce-command-6.png]]
+    [[./img/announce-command-6.png]]
 
    + If picture was added
 
-    [[./img_docs/announce-command-9.png]]
+    [[./img/announce-command-9.png]]
 
 7. The announcement will be made in its designated channel in due time.
 
    + If no picture was added
 
-    [[./img_docs/announce-command-7.png]]
+    [[./img/announce-command-7.png]]
 
    + If picture was added
 
-    [[./img_docs/announce-command-10.png]]
+    [[./img/announce-command-10.png]]
 
 ** Poll Command
 
@@ -89,8 +89,8 @@ The first set of reactions will be generated automatically.
 
 1. Creating a new poll
 
-   [[./img_docs/newpoll-command-1.png]]
+   [[./img/newpoll-command-1.png]]
 
 2. The ~Total Votes~ count will update with each vote cast
 
-   [[./img_docs/newpoll-command-2.png]]
+   [[./img/newpoll-command-2.png]]
