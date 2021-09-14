@@ -24,7 +24,7 @@ use them.
 ** Announce Command
 
 Using the ~%announce~ command, administrators can schedule announcement ahead
-of time. The scheduled announcements are made in tge ~# announcements~ channel of our server. To stop the announcement process at any time,
+of time. The scheduled announcements are made in the ~# announcements~ channel of our server. To stop the announcement process at any time,
 type ~cancel~.
 
 NOTE: You will need to have ~administrator~ permission and the role ~Project Kindling Team~ to use this command.
