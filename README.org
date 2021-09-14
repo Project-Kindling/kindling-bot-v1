@@ -27,6 +27,8 @@ Using the ~%announce~ command, administrators can schedule announcement ahead
 of time. The scheduled announcements are made in tge ~# announcements~ channel of our server. To stop the announcement process at any time,
 type ~cancel~.
 
+NOTE: You will need to have ~administrator~ permission and the role ~Project Kindling Team~ to use this command.
+
 #+begin_src text
 %announce
 #+end_src
@@ -82,6 +84,8 @@ type ~cancel~.
 Using the ~%newpoll~ command administrators can starting a poll with a
 maximum of ~12~ options. Other users can react to the poll to cast a vote.
 The first set of reactions will be generated automatically.
+
+NOTE: You will need to have ~administrator~ permission and the role ~Project Kindling Team~ to use this command.
 
 #+begin_src text
 %newpoll
