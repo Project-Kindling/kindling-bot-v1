@@ -172,6 +172,7 @@ async def announce(ctx):
         msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
         await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have the appropriate role!")
+        await ctx.send(f"Sorry, you must have the role `{role_id}` to use this command.")
   else:
     await ctx.send("This command only works in the send announcements channel")
 
@@ -200,6 +201,7 @@ async def newpoll(ctx):
     # role_check = ctx.message.guild.roles
     msg_author = ctx.message.author
     role_id = discord.utils.get(ctx.guild.roles, name="Project Kindling Team")
+    print("role_id --- ", role_id)
     if role_id in msg_author.roles:
      msg_content = ctx.message.content[9:]
      print(f"msg_content --- {msg_content}")
@@ -246,6 +248,7 @@ async def newpoll(ctx):
         msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
         await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have the appropriate role!")
+        await ctx.send(f"Sorry, you must have the role `{role_id}` to use this command.")
 
 @bot.event
 async def on_raw_reaction_add(payload):
