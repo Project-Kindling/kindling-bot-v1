@@ -184,7 +184,7 @@ async def on_announce_error(ctx, error):
       to_rem_hashtag = msg_author_str.find("#")
       msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
-      await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have administrator permissions!")
+      await ctx.send(f"You don't have administrator permissions, @{msg_wo_hashtag}!")
       await ctx.message.delete()
 
 
@@ -288,7 +288,7 @@ async def on_newpoll_error(ctx, error):
       to_rem_hashtag = msg_author_str.find("#")
       msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
-      await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have administrator permissions!")
+      await ctx.send(f"You don't have administrator permissions, @{msg_wo_hashtag}!")
       await ctx.message.delete()
 
 @bot.event
