@@ -69,7 +69,7 @@ async def on_feedback_error(ctx, error):
     await ctx.message.delete()
 
 @bot.command(name='announce')
-@commands.has_permissions(administrator=True)
+#@commands.has_permissions(administrator=True)
 async def announce(ctx):
   if ctx.channel.id == 857375433812475922:
 
@@ -98,7 +98,7 @@ async def announce(ctx):
              await ctx.send("Okay, cancelling")
              return
            else:
-             await ctx.send("What day and time would you like the announcement posted?\nUse this format: yyyy-mm-dd hh:mm:ss\nUse the 24hr clock format")
+             await ctx.send(f"What day and time would you like the announcement posted?\nUse this format: `yyyy-mm-dd hh:mm:ss`\nUse the 24hr clock format")
              try:
                timeof = await bot.wait_for("message", check=lambda m: m.author == ctx.author\
                   and m.channel == ctx.channel, timeout=1200.0)
@@ -108,7 +108,7 @@ async def announce(ctx):
                  await ctx.send("Okay, cancelling")
                  return
                else:
-                 await ctx.send("Would you like to add an image to the announcement? (type yes/no)")
+                 await ctx.send(f"Would you like to add an image to the announcement? `(yes/no)`")
                  try:
                    sendimg = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=30.0)
                  except: asyncio.TimeoutError
@@ -127,7 +127,7 @@ async def announce(ctx):
                          await ctx.send("Okay, cancelling")
                          return
                        else:
-                         await ctx.send("Your announcement will be sent on {}.\nHere is a preview".format(timeof.content))
+                         await ctx.send(f"Your announcement will be sent at this date and time: `{}`.\nHere is a preview".format(timeof.content))
                          embed = discord.Embed(title=tit.content,\
                            description=con.content, color=0xffe4e1)
 
@@ -135,10 +135,10 @@ async def announce(ctx):
                          embed.set_image(url=img.attachments[0].url)
 
                          await ctx.send(embed=embed)
-                         await ctx.send("Type yes to confirm that you would like to send this announcement,\
-                            type cancel and enter announce command again to restart the process")
+                         await ctx.send(f"Type `yes` to confirm that you would like to send this announcement,\nType `cancel` and enter\
+                         the `announce` command again to restart the process")
                          try:
-                           ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=30.0)
+                           ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=60.0)
                          except: asyncio.TimeoutError
                          else:
                            if ans.content.lower() == "cancel":
@@ -148,13 +148,13 @@ async def announce(ctx):
                              await ctx.send("Great!")
                              sched.add_job(anembed, 'date', run_date=timeof.content, args=[embed])
                    elif sendimg.content.lower() == "no":
-                       await ctx.send("Your announcement will be sent on {}.\nHere is a preview".\
+                       await ctx.send(f"Your announcement will be sent at this date and time: `{}`.\nHere is a preview".\
                        format(timeof.content))
                        embed = discord.Embed(title= tit.content,\
                          description=con.content, color=0xffe4e1)
                        await ctx.send(embed=embed)
-                       await ctx.send("Type yes to confirm that you would like to send this announcement,\
-                        type cancel and enter announce command again to restart the process")
+                       await ctx.send(f"Type `yes` to confirm that you would like to send this announcement,\nType `cancel` and enter\
+                       the `announce` command again to restart the process")
                        try:
                          ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author \
                          and m.channel == ctx.channel, timeout=300.0)
@@ -190,8 +190,8 @@ async def announce(ctx):
 
 async def anembed(embed):
   channel = bot.get_channel(863182926283014154)
- # allowed_mentions = discord.AllowedMentions(everyone = True, roles=True, users=True)
- # await channel.send(content = "@everyone", allowed_mentions = allowed_mentions)
+  allowed_mentions = discord.AllowedMentions(everyone = True, roles=True, users=True)
+  await channel.send(content = "<@&887727465382965268>", allowed_mentions = allowed_mentions)
   await channel.send(embed=embed)
 
 @bot.command(name="newpoll")
