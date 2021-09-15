@@ -74,9 +74,9 @@ async def announce(ctx):
   if ctx.channel.id == 857375433812475922:
 
     msg_author = ctx.message.author
-    role_id = discord.utils.get(ctx.guild.roles, name="Project Kindling Team")
-
-    if role_id in msg_author.roles:
+    role_id_1 = discord.utils.get(ctx.guild.roles, name="Project Kindling Team")
+    role_id_2 = discord.utils.get(ctx.guild.roles, name="Moderator")
+    if role_id_1 in msg_author.roles or role_id_2 in msg_author.roles:
 
      await ctx.send("What would you like the title of your announcement to be? (type cancel anytime to end this process)")
      try:
@@ -172,20 +172,20 @@ async def announce(ctx):
         msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
         await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have the appropriate role!")
-        await ctx.send(f"Sorry, you must have the role `{role_id}` to use this command.")
+        await ctx.send(f"Sorry, you must have either the `{role_id_1}` or `{role_id_2}` role to use this command.")
   else:
     await ctx.send("This command only works in the send announcements channel")
 
-@announce.error
-async def on_announce_error(ctx, error):
-  if isinstance(error, commands.MissingPermissions):
-      msg_author = ctx.message.author
-      msg_author_str = str(msg_author)
-      to_rem_hashtag = msg_author_str.find("#")
-      msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
+# @announce.error
+# async def on_announce_error(ctx, error):
+#   if isinstance(error, commands.MissingPermissions):
+#       msg_author = ctx.message.author
+#       msg_author_str = str(msg_author)
+#       to_rem_hashtag = msg_author_str.find("#")
+#       msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
-      await ctx.send(f"You don't have administrator permissions, @{msg_wo_hashtag}!")
-      await ctx.message.delete()
+#       await ctx.send(f"You don't have administrator permissions, @{msg_wo_hashtag}!")
+#       await ctx.message.delete()
 
 
 async def anembed(embed):
@@ -195,14 +195,15 @@ async def anembed(embed):
   await channel.send(embed=embed)
 
 @bot.command(name="newpoll")
-@commands.has_permissions(administrator=True)
+# @commands.has_permissions(administrator=True)
 # @commands.has_role("Project Kindling Team")
 async def newpoll(ctx):
-    # role_check = ctx.message.guild.roles
     msg_author = ctx.message.author
-    role_id = discord.utils.get(ctx.guild.roles, name="Project Kindling Team")
-    print("role_id --- ", role_id)
-    if role_id in msg_author.roles:
+    role_id_1 = discord.utils.get(ctx.guild.roles, name="Project Kindling Team")
+    role_id_2 = discord.utils.get(ctx.guild.roles, name="Moderator")
+    print("role_id_1 --- ", role_id_1)
+    print("role_id_2 --- ", role_id_2)
+    if role_id_1 in msg_author.roles or role_id_2 in msg_author.roles:
      msg_content = ctx.message.content[9:]
      print(f"msg_content --- {msg_content}")
      question = re.findall('"([^"]*)"', msg_content)
@@ -248,7 +249,7 @@ async def newpoll(ctx):
         msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
         await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have the appropriate role!")
-        await ctx.send(f"Sorry, you must have the role `{role_id}` to use this command.")
+        await ctx.send(f"Sorry, you must have either the `{role_id_1}` or `{role_id_2}` role to use this command.")
 
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -280,16 +281,16 @@ async def on_raw_reaction_remove(payload):
     tv_embed = message.embeds[0].set_field_at(2, name="Total votes", value=total_votes, inline=False)
     await message.edit(embed=tv_embed)
 
-@newpoll.error
-async def on_newpoll_error(ctx, error):
-  if isinstance(error, commands.MissingPermissions):
-      msg_author = ctx.message.author
-      msg_author_str = str(msg_author)
-      to_rem_hashtag = msg_author_str.find("#")
-      msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
+# @newpoll.error
+# async def on_newpoll_error(ctx, error):
+#   if isinstance(error, commands.MissingPermissions):
+#       msg_author = ctx.message.author
+#       msg_author_str = str(msg_author)
+#       to_rem_hashtag = msg_author_str.find("#")
+#       msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
-      await ctx.send(f"You don't have administrator permissions, @{msg_wo_hashtag}!")
-      await ctx.message.delete()
+#       await ctx.send(f"You don't have administrator permissions, @{msg_wo_hashtag}!")
+#       await ctx.message.delete()
 
 @bot.event
 async def on_message(message):
