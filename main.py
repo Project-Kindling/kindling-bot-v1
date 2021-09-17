@@ -201,26 +201,26 @@ async def newpoll(ctx):
     msg_author = ctx.message.author
     role_id_1 = discord.utils.get(ctx.guild.roles, name="Project Kindling Team")
     role_id_2 = discord.utils.get(ctx.guild.roles, name="Moderator")
-    # role_list = []
-    # print("ROLES ---", discord.utils.get(ctx.guild.roles))
-    # print(", ".join([str(r.id) for r in ctx.guild.roles]))
-    # print(", ".join([str(r.name) for r in ctx.guild.roles]))
+    role_list = []
+    print("ROLES ---", discord.utils.get(ctx.guild.roles))
+    print(", ".join([str(r.id) for r in ctx.guild.roles]))
+    print(", ".join([str(r.name) for r in ctx.guild.roles]))
 
-    print("role_id_1 --- ", role_id_1)
-    print("role_id_2 --- ", role_id_2)
+    # print("role_id_1 --- ", role_id_1)
+    # print("role_id_2 --- ", role_id_2)
     if role_id_1 in msg_author.roles or role_id_2 in msg_author.roles:
      msg_content = ctx.message.content[9:]
-     print(f"msg_content --- {msg_content}")
+     # print(f"msg_content --- {msg_content}")
      question = re.findall('"([^"]*)"', msg_content)
      question = ''.join(question)
-     print(f"question type --- {type(question)}")
-     print(f"question -- {question}")
+     # print(f"question type --- {type(question)}")
+     # print(f"question -- {question}")
      to_cut = len(question) + 2
      msg_options = msg_content[to_cut:]
-     print(f"msg_options --- {msg_options}")
+     # print(f"msg_options --- {msg_options}")
      raw_options = msg_options.split(',')
      raw_options = [r_op.strip() for r_op in msg_options.split(',')]
-     print(f"raw_options --- {raw_options}")
+     # print(f"raw_options --- {raw_options}")
 
      options = raw_options
 
