@@ -127,7 +127,7 @@ async def announce(ctx):
                          await ctx.send("Okay, cancelling")
                          return
                        else:
-                         await ctx.send(f"Your announcement will be sent at this date and time: `{}`.\nHere is a preview".format(timeof.content))
+                         await ctx.send("Your announcement will be sent at this date and time: `{}`.\nHere is a preview".format(timeof.content))
                          embed = discord.Embed(title=tit.content,\
                            description=con.content, color=0xffe4e1)
 
@@ -148,7 +148,7 @@ async def announce(ctx):
                              await ctx.send("Great!")
                              sched.add_job(anembed, 'date', run_date=timeof.content, args=[embed])
                    elif sendimg.content.lower() == "no":
-                       await ctx.send(f"Your announcement will be sent at this date and time: `{}`.\nHere is a preview".\
+                       await ctx.send("Your announcement will be sent at this date and time: `{}`.\nHere is a preview".\
                        format(timeof.content))
                        embed = discord.Embed(title= tit.content,\
                          description=con.content, color=0xffe4e1)
@@ -201,6 +201,11 @@ async def newpoll(ctx):
     msg_author = ctx.message.author
     role_id_1 = discord.utils.get(ctx.guild.roles, name="Project Kindling Team")
     role_id_2 = discord.utils.get(ctx.guild.roles, name="Moderator")
+    # role_list = []
+    # print("ROLES ---", discord.utils.get(ctx.guild.roles))
+    # print(", ".join([str(r.id) for r in ctx.guild.roles]))
+    # print(", ".join([str(r.name) for r in ctx.guild.roles]))
+
     print("role_id_1 --- ", role_id_1)
     print("role_id_2 --- ", role_id_2)
     if role_id_1 in msg_author.roles or role_id_2 in msg_author.roles:
