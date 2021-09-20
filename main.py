@@ -359,57 +359,6 @@ async def newpoll(ctx):
     # print(", ".join([str(r.id) for r in ctx.guild.roles]))
     # print(", ".join([str(r.name) for r in ctx.guild.roles]))
 
-    # speciality_usr_li has user facing output  DONE
-    # user provide list of indexes which they want to target
-    # match indexes provided by user to another list with ~actual~ speciality starting
-    # pull elements and join them into a single string with spaces
-    # then ctx.send that message
-
-    speciality_usr_li = [
-     'Everyone',
-     'Project Kindling Team / Campers',
-     'STEM',
-     'Architecture / Interior Design',
-     'Law / Public Policy',
-     'Arts / Design',
-     'Business / Economics',
-     'Politics / Political Science',
-     'Other'
-    ]
-    interests_list = [
-     'Arch / Interior Design',
-     'CAD',
-     'Fitness',
-     'Astronomy',
-     'Coding',
-     'Fashion / Makeup',
-     'Arts / Graphics',
-     'Cooking',
-     'Biz / Commerce',
-     'Makers / Creators',
-     'Languages',
-     'Plants',
-     'Statistics',
-     'Music',
-     'Public-Speaking',
-     'Video-Editing'
-     'Photography',
-     'Seft-Growth',
-     'Writing'
-     ]
-
-    show_speciality = [("Speciality", "\n".join([f"{emotes_num[idx]} {speciality_usr_li}" for idx, speciality_usr_li in enumerate(speciality_usr_li)]), False)]
-    print(show_speciality)
-    embed_speciality = discord.Embed(
-      title="Choose Speciality of mentions",
-      colour=discord.Colour.blue()
-    )
-    for name, value, inline in show_speciality:
-      embed_speciality.add_field(name=name, value=value, inline=inline)
-    await ctx.send(embed=embed_speciality)
-
-
-
     print("role_id_1 ---> ", role_id_1)
     print("role_id_2 ---> ", role_id_2)
     # if role_id_1 in msg_author.roles or role_id_2 in msg_author.roles:
@@ -512,4 +461,5 @@ async def on_message(message):
        await message.channel.send('hi <@' + str(message.author.id) + '>!')
     await bot.process_commands(message)
 
-bot.run(os.environ['TOKEN'])
+# bot.run(os.environ['TOKEN'])
+bot.run('ODgzNTk1Njg1NjMzNjA5NzY4.YTMOmw.3mF-a8PG-ZwQ7VfmhzpP2WOc0Ns')
