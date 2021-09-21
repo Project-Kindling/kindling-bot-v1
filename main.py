@@ -104,27 +104,6 @@ async def announce(ctx):
    '@Politics/Political Science',
    '@Other'
   ]
-  interests_list = [
-   'Arch / Interior Design',
-   'CAD',
-   'Fitness',
-   'Astronomy',
-   'Coding',
-   'Fashion / Makeup',
-   'Arts / Graphics',
-   'Cooking',
-   'Biz / Commerce',
-   'Makers / Creators',
-   'Languages',
-   'Plants',
-   'Statistics',
-   'Music',
-   'Public-Speaking',
-   'Video-Editing'
-   'Photography',
-   'Seft-Growth',
-   'Writing'
-   ]
 
   def gen_usr_face_li():
     show_speciality = [("Speciality", "\n".join([f"{emotes_num[idx]} {speciality_usr_li}" for idx, speciality_usr_li in enumerate(speciality_usr_li)]), False)]
@@ -263,7 +242,7 @@ async def announce(ctx):
                        embed = discord.Embed(title= tit.content,\
                          description=con.content, color=0xffe4e1)
                        await ctx.send(embed=embed)
-                       await ctx.send(f"Type `yes` to confirm that you would like to send this announcement.\ntype `target` if you want to choose who the announcements will ping, type `cancel` and enter\nthe `announce` command again to restart the process")
+                       await ctx.send(f"Type `yes` to confirm that you would like to send this announcement.\ntype ` target ` if you want to choose, by specialty, who the announcements will ping, type `cancel` and enter\nthe `announce` command again to restart the process")
                        try:
                          ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author \
                          and m.channel == ctx.channel, timeout=300.0)
@@ -297,9 +276,9 @@ async def announce(ctx):
                                  await ctx.send("Please try again!")
                                else:
                                  fetch_tar_ele(uidx_int)
-                                 print("hearbeat ~IN LOOP~ ---> ", heartbeat)
+                                 print("heartbeat ~IN LOOP~ ---> ", heartbeat)
                                  out_str = fetch_tar_ele(uidx_int)
-                                 await ctx.send(f"The announcement will target the following roles:``` {out_str} ```\nType ` yes ` to confirm!\nType ` again ` to choose targets again!\nType ` cancel ` to cancel!")
+                                 await ctx.send(f"The announcement will target the following roles:``` {out_str} ```\nType ` yes ` to confirm!\nType ` again ` to choose ping targets again!\nType ` cancel ` to cancel!")
                                  try:
                                    ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author \
                                    and m.channel == ctx.channel, timeout=300.0)
@@ -307,7 +286,7 @@ async def announce(ctx):
                                  else:
                                    if ans.content.lower() == 'cancel':
                                      await ctx.send("Ok cancelling!")
-                                     hearbeat = 0
+                                     heartbeat = 0
                                    elif ans.content.lower() == 'again':
                                      await ctx.send("Please choose again!")
                                    elif ans.content.lower() == 'yes':
@@ -317,7 +296,7 @@ async def announce(ctx):
                                    else:
                                      await ctx.send("Command not recognized!\nExiting")
                                      heartbeat = 0
-                           print("hearbeat ~OUT OF LOOP~ ---> ",heartbeat)
+                           print("heartbeat ~OUT OF LOOP~ ---> ",heartbeat)
     else:
         msg_author_str = str(msg_author)
         to_rem_hashtag = msg_author_str.find("#")
@@ -361,8 +340,7 @@ async def newpoll(ctx):
 
     print("role_id_1 ---> ", role_id_1)
     print("role_id_2 ---> ", role_id_2)
-    # if role_id_1 in msg_author.roles or role_id_2 in msg_author.roles:
-    if role_id_1 == role_id_2:
+    if role_id_1 in msg_author.roles or role_id_2 in msg_author.roles:
      msg_content = ctx.message.content[9:]
      print(f"msg_content ---> {msg_content}")
      question = re.findall('"([^"]*)"', msg_content)
