@@ -110,7 +110,7 @@ async def announce(ctx):
     print(f"show_speciality ---> {show_speciality}")
     embed_speciality = discord.Embed(
       title="Choose Speciality of mentions",
-      description="Please enter a which targets your announcement will ping.\nExample format: ` 3, 0, 5, 7 `",
+      description="Please enter a which targets your announcement will ping.\nExample format: ` 3, 5, 7 `",
       colour=discord.Colour.blue()
     )
     for name, value, inline in show_speciality:
@@ -249,7 +249,7 @@ async def announce(ctx):
                        except: asyncio.TimeoutError
                        else:
                          if ans.content.lower() == "cancel":
-                           await ctx.send("Okay, cancelling")
+                           await ctx.send("Ok cancelling!")
                            return
                          elif ans.content.lower() == "yes":
                            await ctx.send("Great!")
