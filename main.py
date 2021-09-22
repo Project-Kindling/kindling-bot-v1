@@ -194,7 +194,7 @@ async def announce(ctx):
              await ctx.send(cancel)
              return
            else:
-             await ctx.send(f"What ***day and time*** would you like the announcement posted?\nUse this format: ` yyyy-mm-dd hh:mm:ss `\nUse the 24hr clock format!")
+             await ctx.send("What ***day and time*** would you like the announcement posted?\nUse this format: ` yyyy-mm-dd hh:mm:ss `\nUse the 24hr clock format!")
              try:
                timeof = await bot.wait_for("message", check=lambda m: m.author == ctx.author\
                   and m.channel == ctx.channel, timeout=1200.0)
@@ -204,7 +204,7 @@ async def announce(ctx):
                  await ctx.send(cancel)
                  return
                else:
-                 await ctx.send(f"Would you like to add an ***image*** to the announcement?\nType ` yes ` or ` no ` to respond!")
+                 await ctx.send("Would you like to add an ***image*** to the announcement?\nType ` yes ` or ` no ` to respond!")
                  try:
                    sendimg = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=30.0)
                  except: asyncio.TimeoutError
@@ -244,7 +244,7 @@ async def announce(ctx):
                        embed = discord.Embed(title= tit.content,\
                          description=con.content, color=0xffe4e1)
                        await ctx.send(embed=embed)
-                       await ctx.send(f"Type ` yes ` to confirm and send this announcement.\nType ` target ` if you want to choose, by specialty, who the announcements will ping.\nType ` cancel ` and enter the ` %announce ` command again to restart the process")
+                       await ctx.send("Type ` yes ` to confirm and send this announcement.\nType ` target ` if you want to choose, by specialty, who the announcements will ping.\nType ` cancel ` and enter the ` %announce ` command again to restart the process")
                        try:
                          ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author \
                          and m.channel == ctx.channel, timeout=300.0)
