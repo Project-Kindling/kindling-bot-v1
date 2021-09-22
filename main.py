@@ -104,6 +104,8 @@ async def announce(ctx):
    '@Politics/Political Science',
    '@Other'
   ]
+  cancel = "Ok cancelling!"
+  done = "Great! The announcement is scheduled and will be made in due time!"
 
   def gen_usr_face_li():
     show_speciality = [("Speciality", "\n".join([f"{emotes_num[idx]} {speciality_usr_li}" for idx, speciality_usr_li in enumerate(speciality_usr_li)]), False)]
@@ -172,56 +174,56 @@ async def announce(ctx):
     role_id_2 = discord.utils.get(ctx.guild.roles, name="Moderator")
     if role_id_1 in msg_author.roles or role_id_2 in msg_author.roles:
 
-     await ctx.send("What would you like the title of your announcement to be? (type cancel anytime to end this process)")
+     await ctx.send("What would you like the ***title*** of your announcement to be?\nType ` cancel ` at any stage to end the process!")
      try:
        tit = await bot.wait_for("message", check=lambda m: m.author == ctx.author\
           and m.channel == ctx.channel, timeout=1200.0)
      except: asyncio.TimeoutError
      else:
        if tit.content.lower() == "cancel":
-         await ctx.send("Okay, cancelling")
+         await ctx.send(cancel)
          return
        else:
-         await ctx.send("What would you like the content of your announcement to be?")
+         await ctx.send("What would you like the ***content*** of your announcement to be?")
          try:
            con = await bot.wait_for("message", check=lambda m: m.author == ctx.author\
               and m.channel == ctx.channel, timeout=1200.0)
          except: asyncio.TimeoutError
          else:
            if con.content.lower() == "cancel":
-             await ctx.send("Okay, cancelling")
+             await ctx.send(cancel)
              return
            else:
-             await ctx.send(f"What day and time would you like the announcement posted?\nUse this format: `yyyy-mm-dd hh:mm:ss`\nUse the 24hr clock format")
+             await ctx.send(f"What ***day and time*** would you like the announcement posted?\nUse this format: ` yyyy-mm-dd hh:mm:ss `\nUse the 24hr clock format!")
              try:
                timeof = await bot.wait_for("message", check=lambda m: m.author == ctx.author\
                   and m.channel == ctx.channel, timeout=1200.0)
              except: asyncio.TimeoutError
              else:
                if timeof.content.lower() == "cancel":
-                 await ctx.send("Okay, cancelling")
+                 await ctx.send(cancel)
                  return
                else:
-                 await ctx.send(f"Would you like to add an image to the announcement? `(yes/no)`")
+                 await ctx.send(f"Would you like to add an ***image*** to the announcement?\nType ` yes ` or ` no ` to respond!")
                  try:
                    sendimg = await bot.wait_for("message", check=lambda m: m.author == ctx.author and m.channel == ctx.channel, timeout=30.0)
                  except: asyncio.TimeoutError
                  else:
                    if sendimg.content.lower() == "cancel":
-                     await ctx.send("Okay, cancelling")
+                     await ctx.send(cancel)
                      return
                    elif sendimg.content.lower() == "yes":
-                     await ctx.send("Send your image")
+                     await ctx.send("Send your ***image***")
                      try:
                        img = await bot.wait_for("message", check=lambda m: m.author == ctx.author and\
                           m.channel == ctx.channel, timeout=90.0)
                      except: asyncio.TimeoutError
                      else:
                        if img.content.lower() == "cancel":
-                         await ctx.send("Okay, cancelling")
+                         await ctx.send(cancel)
                          return
                        else:
-                         await ctx.send("Your announcement will be sent at this date and time: `{}`.\nHere is a preview".format(timeof.content))
+                         await ctx.send("Your announcement will be sent at this date and time: ***{}***.\nHere is a preview".format(timeof.content))
                          embed = discord.Embed(title=tit.content,\
                            description=con.content, color=0xffe4e1)
                          embed.set_image(url=img.attachments[0].url)
@@ -231,28 +233,28 @@ async def announce(ctx):
                          except: asyncio.TimeoutError
                          else:
                            if ans.content.lower() == "cancel":
-                             await ctx.send("Okay, cancelling")
+                             await ctx.send(cancel)
                              return
                            elif ans.content.lower() == "yes":
-                             await ctx.send("Great!")
+                             await ctx.send(done)
                              sched.add_job(anembed, 'date', run_date=timeof.content, args=[embed])
                    elif sendimg.content.lower() == "no":
-                       await ctx.send("Your announcement will be sent at this date and time: `{}`.\nHere is a preview".\
+                       await ctx.send("Your announcement will be sent at this date and time: ***{}***.\nHere is a preview".\
                        format(timeof.content))
                        embed = discord.Embed(title= tit.content,\
                          description=con.content, color=0xffe4e1)
                        await ctx.send(embed=embed)
-                       await ctx.send(f"Type `yes` to confirm that you would like to send this announcement.\ntype ` target ` if you want to choose, by specialty, who the announcements will ping, type `cancel` and enter\nthe `announce` command again to restart the process")
+                       await ctx.send(f"Type ` yes ` to confirm and send this announcement.\nType ` target ` if you want to choose, by specialty, who the announcements will ping.\nType ` cancel ` and enter the ` %announce ` command again to restart the process")
                        try:
                          ans = await bot.wait_for("message", check=lambda m: m.author == ctx.author \
                          and m.channel == ctx.channel, timeout=300.0)
                        except: asyncio.TimeoutError
                        else:
                          if ans.content.lower() == "cancel":
-                           await ctx.send("Ok cancelling!")
+                           await ctx.send(cancel)
                            return
                          elif ans.content.lower() == "yes":
-                           await ctx.send("Great!")
+                           await ctx.send(done)
                            sched.add_job(anembed, 'date', run_date=timeof.content, args=[embed])
                          elif ans.content.lower() == "target":
                            heartbeat = 1
@@ -269,7 +271,7 @@ async def announce(ctx):
                                  await ctx.send("You are targetting a role that doesn't exist")
                                  await ctx.send("Please try again!")
                                elif uidx_int == "CANCEL":
-                                 await ctx.send("Ok cancelling!")
+                                 await ctx.send(cancel)
                                  heartbeat = 0
                                elif uidx_int == "ERROR":
                                  await ctx.send("Please enter ` numbers ` not ` text `!")
@@ -285,12 +287,12 @@ async def announce(ctx):
                                  except: asyncio.TimeoutError
                                  else:
                                    if ans.content.lower() == 'cancel':
-                                     await ctx.send("Ok cancelling!")
+                                     await ctx.send(cancel)
                                      heartbeat = 0
                                    elif ans.content.lower() == 'again':
                                      await ctx.send("Please choose again!")
                                    elif ans.content.lower() == 'yes':
-                                       await ctx.send("Great!")
+                                       await ctx.send(done)
                                        sched.add_job(anembed, 'date', run_date=timeof.content, args=[embed, out_str])
                                        heartbeat = 0
                                    else:
@@ -303,7 +305,7 @@ async def announce(ctx):
         msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
         await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have the appropriate role!")
-        await ctx.send(f"Sorry, you must have either the `{role_id_1}` or `{role_id_2}` role to use this command.")
+        await ctx.send(f"Sorry, you must have either the ***{role_id_1}*** or ***{role_id_2}*** role to use this command.")
   else:
     await ctx.send("This command only works in the send announcements channel")
 
@@ -386,7 +388,7 @@ async def newpoll(ctx):
         msg_wo_hashtag = msg_author_str[0:to_rem_hashtag]
 
         await ctx.send(f"Shoo! @{msg_wo_hashtag}, Shoo! You don't have the appropriate role!")
-        await ctx.send(f"Sorry, you must have either the `{role_id_1}` or `{role_id_2}` role to use this command.")
+        await ctx.send(f"Sorry, you must have either the **{role_id_1}** or **{role_id_2}** role to use this command.")
 
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -439,4 +441,5 @@ async def on_message(message):
        await message.channel.send('hi <@' + str(message.author.id) + '>!')
     await bot.process_commands(message)
 
-bot.run(os.environ['TOKEN'])
+# bot.run(os.environ['TOKEN'])
+bot.run('ODgzNTk1Njg1NjMzNjA5NzY4.YTMOmw.PT1a2TU8aHu4j4mPKU-fl1QNVlM')
