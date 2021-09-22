@@ -441,5 +441,4 @@ async def on_message(message):
        await message.channel.send('hi <@' + str(message.author.id) + '>!')
     await bot.process_commands(message)
 
-# bot.run(os.environ['TOKEN'])
-bot.run('ODgzNTk1Njg1NjMzNjA5NzY4.YTMOmw.PT1a2TU8aHu4j4mPKU-fl1QNVlM')
+bot.run(os.environ['TOKEN'])
